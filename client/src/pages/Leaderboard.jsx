@@ -29,7 +29,7 @@ export default function Leaderboard() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 className="font-display text-3xl font-extrabold sm:text-4xl">Leaderboard</h1>
-          <p className="mt-2 text-ink-500 dark:text-ink-400">
+          <p className="mt-2 text-ink-500 dark:text-ink-300">
             {tab === 'global'
               ? 'Ranked by average score across every attempt.'
               : 'Best attempt per player for the selected quiz.'}
@@ -106,8 +106,10 @@ export default function Leaderboard() {
                   </span>
                   <Avatar name={row.name} size="lg" className="mt-3" />
                   <p className="mt-2 font-display font-semibold">{row.name}</p>
-                  <p className="text-xs text-ink-500 dark:text-ink-400">
-                    {tab === 'global' ? `${row.attempts} attempts` : `${row.score} points`}
+                  <p className="text-xs text-ink-500 dark:text-ink-300">
+                    {tab === 'global'
+                      ? `${row.attempts} attempt${row.attempts === 1 ? '' : 's'}`
+                      : `${row.score} points`}
                   </p>
                   <p className="mt-2 font-display text-2xl font-bold text-brand-600 dark:text-brand-400">
                     {tab === 'global' ? `${row.averageScore}%` : `${row.percentage}%`}
@@ -119,7 +121,7 @@ export default function Leaderboard() {
             <div className="card overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[600px] text-left text-sm">
-                  <thead className="border-b border-ink-100 bg-ink-50/60 text-xs uppercase tracking-wide text-ink-500 dark:border-white/10 dark:bg-white/5 dark:text-ink-400">
+                  <thead className="border-b border-ink-100 bg-ink-50/60 text-xs uppercase tracking-wide text-ink-500 dark:border-white/10 dark:bg-white/5 dark:text-ink-300">
                     <tr>
                       <th className="px-5 py-3 font-semibold">Rank</th>
                       <th className="px-5 py-3 font-semibold">Player</th>
@@ -149,7 +151,7 @@ export default function Leaderboard() {
                         </td>
                         {tab === 'global' ? (
                           <>
-                            <td className="px-5 py-3 text-ink-500 dark:text-ink-400">{row.attempts}</td>
+                            <td className="px-5 py-3 text-ink-500 dark:text-ink-300">{row.attempts}</td>
                             <td className="px-5 py-3 font-semibold">{row.averageScore}%</td>
                             <td className="px-5 py-3">{row.bestScore}%</td>
                           </>

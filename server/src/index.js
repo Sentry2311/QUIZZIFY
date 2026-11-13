@@ -5,7 +5,6 @@ import { connectDB } from './config/db.js';
 import { env } from './config/env.js';
 import { User } from './models/User.js';
 import { verifyToken } from './utils/token.js';
-import { registerLiveRooms } from './sockets/liveRooms.js';
 
 async function start() {
   await connectDB();
@@ -18,7 +17,7 @@ async function start() {
     pingTimeout: 20000,
   });
 
-  // Authenticate socket handshakes; guests may still join rooms with a name.
+  // Authenticate socket handshakes so notifications can be pushed to user rooms.
   io.use(async (socket, next) => {
     try {
       const token = socket.handshake.auth?.token;
@@ -35,7 +34,6 @@ async function start() {
     next();
   });
 
-  registerLiveRooms(io);
   app.set('io', io);
 
   server.listen(env.port, () => {

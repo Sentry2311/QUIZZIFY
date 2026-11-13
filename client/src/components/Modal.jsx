@@ -46,12 +46,12 @@ export default function Modal({ open, onClose, title, description, children, foo
         <header className="flex items-start justify-between gap-4 border-b border-ink-100 px-5 py-4 dark:border-white/10">
           <div>
             <h2 className="font-display text-lg font-semibold">{title}</h2>
-            {description ? <p className="mt-0.5 text-sm text-ink-500 dark:text-ink-400">{description}</p> : null}
+            {description ? <p className="mt-0.5 text-sm text-ink-500 dark:text-ink-300">{description}</p> : null}
           </div>
           <button
             type="button"
             onClick={() => onClose?.()}
-            className="rounded-lg p-1.5 text-ink-400 transition hover:bg-ink-100 hover:text-ink-700 dark:hover:bg-white/10 dark:hover:text-white"
+            className="rounded-lg p-1.5 text-ink-400 dark:text-ink-300 transition hover:bg-ink-100 hover:text-ink-700 dark:hover:bg-white/10 dark:hover:text-white"
             aria-label="Close dialog"
           >
             <X className="h-5 w-5" />

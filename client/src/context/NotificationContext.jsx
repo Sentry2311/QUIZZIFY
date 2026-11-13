@@ -35,7 +35,7 @@ export function NotificationProvider({ children }) {
     load();
   }, [token, load]);
 
-  // Live push from the server (attempt results, achievements, admin broadcasts).
+  // Realtime push from the server (attempt results, achievements, admin broadcasts).
   useEffect(() => {
     if (!socket) return undefined;
     const onNotification = (notification) => {

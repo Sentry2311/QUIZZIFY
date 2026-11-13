@@ -50,7 +50,7 @@ export function ToastProvider({ children }) {
     <ToastContext.Provider value={value}>
       {children}
       <div
-        className="pointer-events-none fixed inset-x-0 top-4 z-[100] flex flex-col items-center gap-2 px-4 sm:items-end sm:pr-6"
+        className="pointer-events-none fixed inset-x-0 top-[4.75rem] z-[100] flex flex-col items-center gap-2 px-4 sm:items-end sm:pr-6"
         role="status"
         aria-live="polite"
       >
@@ -67,12 +67,12 @@ export function ToastProvider({ children }) {
               <Icon className="mt-0.5 h-5 w-5 shrink-0" />
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-semibold">{item.title}</p>
-                {item.message ? <p className="mt-0.5 text-xs text-ink-500 dark:text-ink-400">{item.message}</p> : null}
+                {item.message ? <p className="mt-0.5 text-xs text-ink-500 dark:text-ink-300">{item.message}</p> : null}
               </div>
               <button
                 type="button"
                 onClick={() => dismiss(item.id)}
-                className="rounded-md p-1 text-ink-400 transition hover:bg-ink-100 hover:text-ink-700 dark:hover:bg-white/10 dark:hover:text-white"
+                className="rounded-md p-1 text-ink-400 dark:text-ink-300 transition hover:bg-ink-100 hover:text-ink-700 dark:hover:bg-white/10 dark:hover:text-white"
                 aria-label="Dismiss notification"
               >
                 <X className="h-4 w-4" />

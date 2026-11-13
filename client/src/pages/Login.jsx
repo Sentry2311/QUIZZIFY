@@ -65,7 +65,7 @@ export default function Login() {
             Pick up where you left off.
           </h1>
           <p className="mt-3 max-w-md text-ink-600 dark:text-ink-300">
-            Your attempts, best scores and live rooms are waiting. Sign in to keep your history in sync.
+            Your attempts, best scores and leaderboard position are waiting. Sign in to keep your history in sync.
           </p>
 
           <div className="mt-8 rounded-2xl border border-dashed border-ink-300 p-5 dark:border-white/15">
@@ -79,7 +79,7 @@ export default function Login() {
                   className="flex items-center justify-between rounded-lg bg-white px-3 py-2 text-left text-sm transition hover:bg-brand-50 dark:bg-white/5 dark:hover:bg-white/10"
                 >
                   <span className="font-medium">{account.label}</span>
-                  <span className="text-xs text-ink-500 dark:text-ink-400">{account.email}</span>
+                  <span className="text-xs text-ink-500 dark:text-ink-300">{account.email}</span>
                 </button>
               ))}
             </div>
@@ -88,7 +88,7 @@ export default function Login() {
 
         <div className="card mx-auto w-full max-w-md p-6 sm:p-8">
           <h2 className="font-display text-2xl font-bold">Sign in</h2>
-          <p className="mt-1 text-sm text-ink-500 dark:text-ink-400">Enter your details to access your dashboard.</p>
+          <p className="mt-1 text-sm text-ink-500 dark:text-ink-300">Enter your details to access your dashboard.</p>
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-4" noValidate>
             {serverError ? <Alert>{serverError}</Alert> : null}
@@ -121,7 +121,7 @@ export default function Login() {
           </form>
 
           <div className="mt-5 space-y-3 text-sm">
-            <p className="text-ink-500 dark:text-ink-400">
+            <p className="text-ink-500 dark:text-ink-300">
               New to Quizzify?{' '}
               <Link to="/register" className="link">
                 Create an account

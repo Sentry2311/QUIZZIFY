@@ -1,12 +1,12 @@
 import { cn, initials } from '../lib/utils.js';
 
 const PALETTE = [
-  'from-brand-500 to-indigo-600',
-  'from-emerald-500 to-teal-600',
-  'from-amber-500 to-orange-600',
-  'from-rose-500 to-pink-600',
-  'from-sky-500 to-blue-600',
-  'from-violet-500 to-purple-600',
+  'from-brand-700 to-brand-900',
+  'from-accent-400 to-accent-600',
+  'from-emerald-500 to-teal-700',
+  'from-amber-500 to-brand-700',
+  'from-rose-500 to-brand-800',
+  'from-accent-300 to-brand-700',
 ];
 
 export default function Avatar({ name = '?', size = 'md', className }) {

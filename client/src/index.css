@@ -28,15 +28,15 @@
   .dark h2,
   .dark h3,
   .dark h4 {
-    @apply text-white;
+    @apply text-brand-50;
   }
 
   ::selection {
-    @apply bg-brand-200 text-brand-900;
+    @apply bg-accent-200 text-brand-900;
   }
 
   *:focus-visible {
-    @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-white;
+    @apply outline-none ring-2 ring-accent-500 ring-offset-2 ring-offset-ink-50;
   }
 
   .dark *:focus-visible {
@@ -50,11 +50,11 @@
   }
 
   .card {
-    @apply rounded-2xl border border-ink-200/80 bg-white shadow-soft transition dark:border-white/10 dark:bg-ink-900/70;
+    @apply rounded-2xl border border-ink-200/80 bg-white shadow-soft transition dark:border-white/10 dark:bg-ink-900/85;
   }
 
   .card-hover {
-    @apply hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-lift dark:hover:border-brand-500/50;
+    @apply hover:-translate-y-0.5 hover:border-accent-300 hover:shadow-lift dark:hover:border-accent-300/40;
   }
 
   .btn {
@@ -62,23 +62,23 @@
   }
 
   .btn-primary {
-    @apply btn bg-brand-600 text-white shadow-sm hover:bg-brand-700 hover:shadow-lift active:scale-[0.98];
+    @apply btn bg-brand-800 text-brand-50 shadow-sm hover:bg-brand-900 hover:shadow-lift active:scale-[0.98] dark:bg-accent-300 dark:text-brand-950 dark:hover:bg-accent-200;
   }
 
   .btn-secondary {
-    @apply btn border border-ink-200 bg-white text-ink-700 hover:border-brand-300 hover:text-brand-700 dark:border-white/10 dark:bg-white/5 dark:text-ink-200 dark:hover:border-brand-500/60 dark:hover:text-white;
+    @apply btn border border-ink-300 bg-white text-ink-700 hover:border-accent-500 hover:text-brand-900 dark:border-white/15 dark:bg-white/5 dark:text-ink-200 dark:hover:border-accent-300/60 dark:hover:text-white;
   }
 
   .btn-ghost {
-    @apply btn text-ink-600 hover:bg-ink-100 hover:text-ink-900 dark:text-ink-300 dark:hover:bg-white/10 dark:hover:text-white;
+    @apply btn text-ink-600 hover:bg-ink-100 hover:text-ink-900 dark:text-ink-300 dark:hover:bg-white/10 dark:hover:text-brand-50;
   }
 
   .btn-danger {
-    @apply btn bg-rose-600 text-white hover:bg-rose-700 active:scale-[0.98];
+    @apply btn bg-rose-700 text-white hover:bg-rose-800 active:scale-[0.98];
   }
 
   .input {
-    @apply w-full rounded-xl border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder-ink-400 transition focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30 dark:border-white/10 dark:bg-ink-900 dark:text-white dark:placeholder-ink-500;
+    @apply w-full rounded-xl border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder-ink-500 transition focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-300 dark:border-white/15 dark:bg-ink-900 dark:text-brand-50 dark:placeholder-ink-400;
   }
 
   .label {
@@ -86,11 +86,11 @@
   }
 
   .chip {
-    @apply inline-flex items-center gap-1.5 rounded-full border border-ink-200 bg-white px-3 py-1.5 text-xs font-medium text-ink-600 transition hover:border-brand-300 hover:text-brand-700 dark:border-white/10 dark:bg-white/5 dark:text-ink-300 dark:hover:border-brand-500/50 dark:hover:text-white;
+    @apply inline-flex items-center gap-1.5 rounded-full border border-ink-200 bg-white px-3 py-1.5 text-xs font-medium text-ink-600 transition hover:border-accent-400 hover:text-brand-900 dark:border-white/10 dark:bg-white/5 dark:text-ink-300 dark:hover:border-accent-300/50 dark:hover:text-white;
   }
 
   .chip-active {
-    @apply border-brand-500 bg-brand-500 text-white hover:border-brand-500 hover:text-white dark:border-brand-500 dark:bg-brand-500 dark:text-white;
+    @apply border-brand-800 bg-brand-800 text-brand-50 hover:border-brand-800 hover:text-brand-50 dark:border-accent-300 dark:bg-accent-300 dark:text-brand-900 dark:hover:border-accent-300 dark:hover:text-brand-900;
   }
 
   .badge {
@@ -98,7 +98,7 @@
   }
 
   .link {
-    @apply font-medium text-brand-600 underline-offset-4 transition hover:text-brand-700 hover:underline dark:text-brand-400 dark:hover:text-brand-300;
+    @apply font-medium text-brand-700 underline-offset-4 transition hover:text-brand-900 hover:underline dark:text-accent-300 dark:hover:text-accent-200;
   }
 
   .skeleton {

@@ -8,7 +8,6 @@ import {
   LogOut,
   Menu,
   Moon,
-  Radio,
   Shield,
   Sun,
   Trophy,
@@ -25,14 +24,13 @@ import { cn, formatRelative } from '../lib/utils.js';
 const LINKS = [
   { to: '/quizzes', label: 'Quizzes', icon: BookOpen },
   { to: '/leaderboard', label: 'Leaderboard', icon: Trophy },
-  { to: '/live', label: 'Live', icon: Radio },
 ];
 
 function navClass({ isActive }) {
   return cn(
     'inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition',
     isActive
-      ? 'bg-brand-50 text-brand-700 dark:bg-brand-500/15 dark:text-brand-200'
+      ? 'bg-brand-100 text-brand-900 dark:bg-white/10 dark:text-brand-50'
       : 'text-ink-600 hover:bg-ink-100 hover:text-ink-900 dark:text-ink-300 dark:hover:bg-white/10 dark:hover:text-white',
   );
 }
@@ -79,11 +77,11 @@ export default function Navbar() {
   return (
     <header
       ref={headerRef}
-      className="sticky top-0 z-40 border-b border-ink-200/70 bg-white/80 backdrop-blur-md dark:border-white/10 dark:bg-ink-950/80"
+      className="sticky top-0 z-40 border-b border-ink-200/70 bg-white/85 backdrop-blur-md dark:border-white/10 dark:bg-ink-950/85"
     >
       <div className="container-page flex h-16 items-center justify-between gap-3">
         <Link to="/" className="flex items-center gap-2.5" onClick={() => setMobileOpen(false)}>
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-violet-600 text-lg font-bold text-white shadow-sm">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand-800 to-brand-950 text-lg font-bold text-brand-50 shadow-sm ring-1 ring-accent-300/50">
             Q
           </span>
           <span className="font-display text-xl font-extrabold tracking-tight">Quizzify</span>
@@ -141,7 +139,7 @@ export default function Navbar() {
                     </div>
                     <div className="max-h-80 divide-y divide-ink-100 overflow-y-auto dark:divide-white/5">
                       {notifications.length === 0 ? (
-                        <p className="px-4 py-8 text-center text-sm text-ink-400">Nothing here yet.</p>
+                        <p className="px-4 py-8 text-center text-sm text-ink-400 dark:text-ink-300">Nothing here yet.</p>
                       ) : (
                         notifications.map((item) => (
                           <div
@@ -149,8 +147,8 @@ export default function Navbar() {
                             className={cn('px-4 py-3 text-sm', !item.read && 'bg-brand-50/60 dark:bg-brand-500/5')}
                           >
                             <p className="font-medium">{item.title}</p>
-                            <p className="mt-0.5 text-xs text-ink-500 dark:text-ink-400">{item.message}</p>
-                            <p className="mt-1 text-[11px] text-ink-400">{formatRelative(item.createdAt)}</p>
+                            <p className="mt-0.5 text-xs text-ink-500 dark:text-ink-300">{item.message}</p>
+                            <p className="mt-1 text-[11px] text-ink-400 dark:text-ink-300">{formatRelative(item.createdAt)}</p>
                           </div>
                         ))
                       )}
@@ -173,7 +171,7 @@ export default function Navbar() {
                   <div className="absolute right-0 mt-2 w-56 overflow-hidden rounded-xl border border-ink-200 bg-white shadow-soft animate-pop-in dark:border-white/10 dark:bg-ink-900">
                     <div className="border-b border-ink-100 px-4 py-3 dark:border-white/10">
                       <p className="truncate text-sm font-semibold">{user?.name}</p>
-                      <p className="truncate text-xs text-ink-500 dark:text-ink-400">{user?.email}</p>
+                      <p className="truncate text-xs text-ink-500 dark:text-ink-300">{user?.email}</p>
                       <span className="badge mt-2 bg-brand-50 text-brand-700 dark:bg-brand-500/15 dark:text-brand-300">
                         {user?.role}
                       </span>

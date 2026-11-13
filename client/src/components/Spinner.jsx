@@ -3,7 +3,7 @@ import { cn } from '../lib/utils.js';
 
 export default function Spinner({ className, label = 'Loading' }) {
   return (
-    <span className="inline-flex items-center gap-2 text-sm text-ink-500 dark:text-ink-400">
+    <span className="inline-flex items-center gap-2 text-sm text-ink-500 dark:text-ink-300">
       <Loader2 className={cn('h-4 w-4 animate-spin', className)} />
       <span className="sr-only">{label}</span>
     </span>
@@ -14,7 +14,7 @@ export function PageLoader({ label = 'Loading…' }) {
   return (
     <div className="flex min-h-[50vh] flex-col items-center justify-center gap-3">
       <Loader2 className="h-8 w-8 animate-spin text-brand-500" />
-      <p className="text-sm text-ink-500 dark:text-ink-400">{label}</p>
+      <p className="text-sm text-ink-500 dark:text-ink-300">{label}</p>
     </div>
   );
 }

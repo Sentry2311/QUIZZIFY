@@ -7,21 +7,21 @@ minutes.
 
 ### 1. Title
 
-**Quizzify — a real-time online quiz platform**
+**Quizzify — an online quiz platform**
 Full-stack MERN project · your name · date
 
 ### 2. The problem
 
-- Learning tools are either solo and static, or live but locked into one vendor.
-- People want to create their own quizzes and play together, with instant feedback.
-- Goal: a platform where anyone can build a quiz, play it solo, or host it live with a shared code.
+- Most quiz tools are either single-player and static, or locked into one vendor.
+- People want to build their own quizzes, play them with a timer and learn from their mistakes.
+- Goal: a platform where users browse and play quizzes, see detailed results, and track progress over time.
 
 ### 3. Demo agenda
 
 1. Browse and search quizzes
 2. Play a timed quiz and review answers
 3. Dashboard + leaderboards
-4. Admin: create a quiz and host a live room
+4. Admin: create and publish a quiz
 
 ### 4. Tech stack
 
@@ -29,7 +29,7 @@ Full-stack MERN project · your name · date
 | --------- | ---------------------------------------- |
 | Frontend  | React 18, Vite, Tailwind CSS, React Router |
 | State     | Context API + custom hooks               |
-| Backend   | Express REST API, Socket.IO              |
+| Backend   | Express REST API, Socket.IO (notifications) |
 | Data      | MongoDB + Mongoose                       |
 | Auth      | JWT + bcrypt + role-based access         |
 | Ops       | Docker Compose, GitHub Actions, Render   |
@@ -37,7 +37,8 @@ Full-stack MERN project · your name · date
 ### 5. Architecture
 
 Show the diagram from `README.md` → Architecture.
-Talking points: SPA on nginx, API behind `/api`, Socket.IO on the same HTTP server, MongoDB persistence.
+Talking points: SPA on nginx, API behind `/api`, Socket.IO on the same HTTP server for notifications,
+MongoDB persistence.
 
 ### 6. Data model
 
@@ -48,7 +49,7 @@ Talking points: SPA on nginx, API behind `/api`, Socket.IO on the same HTTP serv
 
 ### 7. Frontend highlights
 
-- Responsive mobile / tablet / desktop layouts, collapsible navigation.
+- Brown, cream and blue design system with a responsive mobile / tablet / desktop layout.
 - Dark/light mode with persisted preference.
 - Reusable Tailwind component classes; modals, toasts, skeletons and inline validation.
 - Custom hooks: `useApi`, `useDebounce`, `useCountdown`, `useAuth`, `useSocket`.
@@ -60,12 +61,11 @@ Talking points: SPA on nginx, API behind `/api`, Socket.IO on the same HTTP serv
 - Admin middleware plus ownership checks; correct answers stripped from public payloads.
 - Central error handler, helmet, CORS allow-list, rate limiting.
 
-### 9. Real-time features
+### 9. Real-time notifications
 
-- Socket handshake authenticated with the same JWT (guests can join by name).
-- Live room lifecycle: create → lobby → question → reveal → next → final standings.
-- Server-authoritative scoring with speed bonus; live scoreboard and chat.
-- Notifications pushed to `user:<id>` channels.
+- Socket handshake authenticated with the same JWT; connections join a per-user room.
+- Notifications persisted in MongoDB and pushed instantly when an attempt scores 80%+.
+- Bell menu shows unread counts and marks notifications as read.
 
 ### 10. DevOps
 
@@ -78,13 +78,13 @@ Talking points: SPA on nginx, API behind `/api`, Socket.IO on the same HTTP serv
 
 - 23 API integration tests (auth, RBAC, scoring, leaderboards, admin).
 - Production build verified.
-- Screens: landing, browse, player, result review, dashboard, live room, admin analytics.
+- Screens: landing, browse, player, result review, dashboard, admin analytics.
 
 ### 12. Lessons learned & next steps
 
 - Server-side grading is essential once clients control the timer.
 - Token revocation needed a dedicated field rather than in-memory blacklists.
-- Next: Redis adapter for multi-instance rooms, password reset emails, quiz images, E2E tests with Playwright.
+- Next: password reset emails, quiz images, profile avatars and E2E tests with Playwright.
 - Close with the repository link, live URLs (if deployed) and sample accounts.
 
 ---
@@ -93,8 +93,8 @@ Talking points: SPA on nginx, API behind `/api`, Socket.IO on the same HTTP serv
 
 1. Sign in as `player@quizzify.dev / player123`.
 2. Open **Quizzes**, search "react", filter **Easy**, play **React Fundamentals**.
-3. Point out the timer, then the answer review and toast/notification.
+3. Point out the timer, then the answer review and the notification bell badge.
 4. Show **Dashboard** stats and **Leaderboard**.
 5. Sign in as `admin@quizzify.dev / admin123` in a second browser.
-6. **Admin → Quiz library → Host live** on a quiz, copy the room code.
-7. In the first browser join `/live/<code>` as the player, chat, start the quiz, answer, watch scores update.
+6. **Admin → Quiz library → New quiz**, add two questions and publish.
+7. Back on the player account, find the new quiz under **Quizzes** and play it.

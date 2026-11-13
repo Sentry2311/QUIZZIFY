@@ -46,8 +46,8 @@ export default function Register() {
     <div className="container-page flex min-h-[calc(100vh-4rem)] items-center justify-center py-12">
       <div className="card mx-auto w-full max-w-md p-6 sm:p-8">
         <h1 className="font-display text-2xl font-bold">Create your account</h1>
-        <p className="mt-1 text-sm text-ink-500 dark:text-ink-400">
-          Free forever. Track your scores and join live rooms.
+        <p className="mt-1 text-sm text-ink-500 dark:text-ink-300">
+          Free forever. Track your scores and climb the leaderboard.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4" noValidate>
@@ -91,7 +91,7 @@ export default function Register() {
           </Button>
         </form>
 
-        <p className="mt-5 text-sm text-ink-500 dark:text-ink-400">
+        <p className="mt-5 text-sm text-ink-500 dark:text-ink-300">
           Already have an account?{' '}
           <Link to="/login" className="link">
             Sign in

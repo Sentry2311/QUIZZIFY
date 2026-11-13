@@ -17,7 +17,7 @@ const Input = forwardRef(function Input(
       ) : null}
       <div className="relative">
         {Icon ? (
-          <Icon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
+          <Icon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400 dark:text-ink-300" />
         ) : null}
         <input
           ref={ref}
@@ -34,7 +34,7 @@ const Input = forwardRef(function Input(
           {error}
         </p>
       ) : hint ? (
-        <p className="mt-1.5 text-xs text-ink-400">{hint}</p>
+        <p className="mt-1.5 text-xs text-ink-400 dark:text-ink-300">{hint}</p>
       ) : null}
     </div>
   );

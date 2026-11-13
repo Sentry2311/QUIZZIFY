@@ -1,10 +1,8 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   ArrowRight,
   BarChart3,
   BookOpen,
-  Radio,
   Sparkles,
   Target,
   Trophy,
@@ -23,26 +21,12 @@ import { cn, formatRelative, scoreTone } from '../lib/utils.js';
 
 export default function Dashboard() {
   const { user, stats } = useAuth();
-  const navigate = useNavigate();
-  const [code, setCode] = useState('');
-  const [codeError, setCodeError] = useState('');
 
   const { data: attemptData, loading: attemptsLoading, error: attemptsError } = useApi('/attempts/mine');
   const { data: quizData, loading: quizzesLoading } = useApi('/quizzes', { params: { limit: 3, sort: 'popular' } });
 
   const attempts = attemptData?.attempts ?? [];
   const recommended = quizData?.quizzes ?? [];
-
-  const joinRoom = (event) => {
-    event.preventDefault();
-    const cleaned = code.trim().toUpperCase();
-    if (cleaned.length < 4) {
-      setCodeError('Room codes are 5 characters');
-      return;
-    }
-    setCodeError('');
-    navigate(`/live/${cleaned}`);
-  };
 
   const bestScore = stats?.bestScore ?? attempts.reduce((max, attempt) => Math.max(max, attempt.percentage), 0);
   const averageScore = stats?.averageScore ?? 0;
@@ -53,7 +37,7 @@ export default function Dashboard() {
         <div className="flex items-center gap-4">
           <Avatar name={user?.name} size="lg" />
           <div>
-            <p className="text-sm text-ink-500 dark:text-ink-400">Welcome back</p>
+            <p className="text-sm text-ink-500 dark:text-ink-300">Welcome back</p>
             <h1 className="font-display text-2xl font-extrabold sm:text-3xl">{user?.name}</h1>
           </div>
         </div>
@@ -78,12 +62,7 @@ export default function Dashboard() {
 
       <div className="mt-8 grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <div className="flex items-center justify-between">
-            <h2 className="font-display text-xl font-bold">Recent attempts</h2>
-            <Link to="/leaderboard" className="link text-sm">
-              Leaderboard
-            </Link>
-          </div>
+          <h2 className="font-display text-xl font-bold">Recent attempts</h2>
 
           <div className="mt-4">
             {attemptsError ? <Alert>{attemptsError}</Alert> : null}
@@ -114,11 +93,11 @@ export default function Dashboard() {
                     <div className="min-w-0 flex-1">
                       <Link
                         to={`/quizzes/${attempt.quiz?.id}`}
-                        className="truncate font-medium transition hover:text-brand-600 dark:hover:text-brand-300"
+                        className="truncate font-medium transition hover:text-brand-700 dark:hover:text-accent-300"
                       >
                         {attempt.quiz?.title ?? 'Deleted quiz'}
                       </Link>
-                      <p className="mt-0.5 text-xs text-ink-500 dark:text-ink-400">
+                      <p className="mt-0.5 text-xs text-ink-500 dark:text-ink-300">
                         {attempt.correctCount}/{attempt.totalQuestions} correct · {formatRelative(attempt.createdAt)}
                       </p>
                       <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-ink-100 dark:bg-white/10">
@@ -142,31 +121,33 @@ export default function Dashboard() {
         </div>
 
         <div>
-          <h2 className="font-display text-xl font-bold">Join a live room</h2>
-          <form onSubmit={joinRoom} className="card mt-4 p-5">
-            <label htmlFor="room-code" className="label">
-              Room code
-            </label>
-            <input
-              id="room-code"
-              value={code}
-              onChange={(event) => {
-                setCode(event.target.value.toUpperCase());
-                setCodeError('');
-              }}
-              placeholder="ABCDE"
-              maxLength={5}
-              className="input text-center font-display text-2xl font-bold uppercase tracking-[0.4em]"
-              aria-invalid={Boolean(codeError)}
-            />
-            {codeError ? <p className="mt-1.5 text-xs text-rose-500">{codeError}</p> : null}
-            <Button type="submit" className="mt-3 w-full">
-              <Radio className="h-4 w-4" /> Join room
-            </Button>
-            <p className="mt-3 text-xs text-ink-400">
-              Ask the host for their 5-character code. No account needed to join as a guest.
-            </p>
-          </form>
+          <h2 className="font-display text-xl font-bold">Your progress</h2>
+          <div className="card mt-4 p-5">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-ink-600 dark:text-ink-300">Best score</span>
+              <span className={cn('font-display text-lg font-bold', scoreTone(bestScore))}>{bestScore}%</span>
+            </div>
+            <div className="mt-2 h-2 overflow-hidden rounded-full bg-ink-100 dark:bg-white/10">
+              <div className="h-full rounded-full bg-brand-700 dark:bg-brand-300" style={{ width: `${bestScore}%` }} />
+            </div>
+
+            <div className="mt-5 flex items-center justify-between">
+              <span className="text-sm font-medium text-ink-600 dark:text-ink-300">Average score</span>
+              <span className={cn('font-display text-lg font-bold', scoreTone(averageScore))}>{averageScore}%</span>
+            </div>
+            <div className="mt-2 h-2 overflow-hidden rounded-full bg-ink-100 dark:bg-white/10">
+              <div className="h-full rounded-full bg-accent-400" style={{ width: `${averageScore}%` }} />
+            </div>
+
+            <div className="mt-6 space-y-2 border-t border-ink-100 pt-5 dark:border-white/10">
+              <Button variant="secondary" to="/quizzes" className="w-full justify-between">
+                Explore quizzes <ArrowRight className="h-4 w-4" />
+              </Button>
+              <Button variant="ghost" to="/leaderboard" className="w-full justify-between">
+                View leaderboard <Trophy className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
 

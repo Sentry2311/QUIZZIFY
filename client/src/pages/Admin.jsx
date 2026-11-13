@@ -65,7 +65,7 @@ export default function Admin() {
             <ShieldCheck className="h-3.5 w-3.5" /> Admin
           </span>
           <h1 className="mt-3 font-display text-3xl font-extrabold">Platform overview</h1>
-          <p className="mt-1 text-sm text-ink-500 dark:text-ink-400">
+          <p className="mt-1 text-sm text-ink-500 dark:text-ink-300">
             Manage quizzes, watch activity and promote moderators.
           </p>
         </div>
@@ -88,19 +88,19 @@ export default function Admin() {
           <h2 className="font-display text-lg font-bold">Top quizzes</h2>
           <ul className="mt-4 space-y-3">
             {(statsData?.topQuizzes ?? []).length === 0 ? (
-              <li className="text-sm text-ink-400">No quizzes yet.</li>
+              <li className="text-sm text-ink-400 dark:text-ink-300">No quizzes yet.</li>
             ) : (
               statsData.topQuizzes.map((quiz, index) => (
                 <li key={quiz.id} className="flex items-center gap-3">
-                  <span className="w-4 text-xs font-bold text-ink-400">{index + 1}</span>
+                  <span className="w-4 text-xs font-bold text-ink-400 dark:text-ink-300">{index + 1}</span>
                   <span className="text-xl">{quiz.cover}</span>
                   <div className="min-w-0 flex-1">
                     <Link to={`/quizzes/${quiz.id}`} className="block truncate text-sm font-medium hover:text-brand-600 dark:hover:text-brand-300">
                       {quiz.title}
                     </Link>
-                    <p className="text-xs text-ink-400">{quiz.category}</p>
+                    <p className="text-xs text-ink-400 dark:text-ink-300">{quiz.category}</p>
                   </div>
-                  <span className="text-xs font-semibold text-ink-500 dark:text-ink-400">{quiz.plays} plays</span>
+                  <span className="text-xs font-semibold text-ink-500 dark:text-ink-300">{quiz.plays} plays</span>
                 </li>
               ))
             )}
@@ -111,7 +111,7 @@ export default function Admin() {
           <h2 className="font-display text-lg font-bold">Recent activity</h2>
           <ul className="mt-4 space-y-3">
             {(statsData?.recentAttempts ?? []).length === 0 ? (
-              <li className="text-sm text-ink-400">No attempts recorded yet.</li>
+              <li className="text-sm text-ink-400 dark:text-ink-300">No attempts recorded yet.</li>
             ) : (
               statsData.recentAttempts.map((attempt) => (
                 <li key={attempt.id} className="flex items-center gap-3 border-b border-ink-100 pb-3 last:border-0 last:pb-0 dark:border-white/5">
@@ -119,10 +119,10 @@ export default function Admin() {
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm">
                       <span className="font-medium">{attempt.user}</span>{' '}
-                      <span className="text-ink-500 dark:text-ink-400">scored {attempt.percentage}% on</span>{' '}
+                      <span className="text-ink-500 dark:text-ink-300">scored {attempt.percentage}% on</span>{' '}
                       <span className="font-medium">{attempt.quiz}</span>
                     </p>
-                    <p className="text-xs text-ink-400">{formatRelative(attempt.createdAt)}</p>
+                    <p className="text-xs text-ink-400 dark:text-ink-300">{formatRelative(attempt.createdAt)}</p>
                   </div>
                 </li>
               ))
@@ -135,10 +135,10 @@ export default function Admin() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="font-display text-xl font-bold">Users</h2>
-            <p className="text-sm text-ink-500 dark:text-ink-400">Promote players to admin or back again.</p>
+            <p className="text-sm text-ink-500 dark:text-ink-300">Promote players to admin or back again.</p>
           </div>
           <div className="relative sm:w-72">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400 dark:text-ink-300" />
             <input
               value={search}
               onChange={(event) => {
@@ -161,7 +161,7 @@ export default function Admin() {
             <div className="card overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[640px] text-left text-sm">
-                  <thead className="border-b border-ink-100 bg-ink-50/60 text-xs uppercase tracking-wide text-ink-500 dark:border-white/10 dark:bg-white/5 dark:text-ink-400">
+                  <thead className="border-b border-ink-100 bg-ink-50/60 text-xs uppercase tracking-wide text-ink-500 dark:border-white/10 dark:bg-white/5 dark:text-ink-300">
                     <tr>
                       <th className="px-5 py-3 font-semibold">User</th>
                       <th className="px-5 py-3 font-semibold">Role</th>
@@ -179,9 +179,9 @@ export default function Admin() {
                               <Avatar name={row.name} size="sm" />
                               <div className="min-w-0">
                                 <p className="truncate font-medium">
-                                  {row.name} {isSelf ? <span className="text-xs text-ink-400">(you)</span> : null}
+                                  {row.name} {isSelf ? <span className="text-xs text-ink-400 dark:text-ink-300">(you)</span> : null}
                                 </p>
-                                <p className="truncate text-xs text-ink-400">{row.email}</p>
+                                <p className="truncate text-xs text-ink-400 dark:text-ink-300">{row.email}</p>
                               </div>
                             </div>
                           </td>
@@ -198,7 +198,7 @@ export default function Admin() {
                               {row.role}
                             </span>
                           </td>
-                          <td className="px-5 py-3 text-ink-500 dark:text-ink-400">{formatRelative(row.createdAt)}</td>
+                          <td className="px-5 py-3 text-ink-500 dark:text-ink-300">{formatRelative(row.createdAt)}</td>
                           <td className="px-5 py-3 text-right">
                             <button
                               type="button"

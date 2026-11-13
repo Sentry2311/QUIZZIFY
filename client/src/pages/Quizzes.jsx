@@ -43,7 +43,7 @@ export default function Quizzes() {
     <div className="container-page py-10">
       <header className="max-w-2xl">
         <h1 className="font-display text-3xl font-extrabold sm:text-4xl">Explore quizzes</h1>
-        <p className="mt-2 text-ink-500 dark:text-ink-400">
+        <p className="mt-2 text-ink-500 dark:text-ink-300">
           {data ? `${data.total} published quiz${data.total === 1 ? '' : 'zes'} across ${categoryData?.categories?.length ?? 0} categories.` : 'Find your next challenge.'}
         </p>
       </header>
@@ -51,7 +51,7 @@ export default function Quizzes() {
       <div className="mt-8 flex flex-col gap-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <div className="relative flex-1">
-            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400 dark:text-ink-300" />
             <input
               type="search"
               value={search}
@@ -64,7 +64,7 @@ export default function Quizzes() {
               <button
                 type="button"
                 onClick={() => setSearch('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 rounded p-0.5 text-ink-400 hover:text-ink-700 dark:hover:text-white"
+                className="absolute right-3 top-1/2 -translate-y-1/2 rounded p-0.5 text-ink-400 dark:text-ink-300 hover:text-ink-700 dark:hover:text-white"
                 aria-label="Clear search"
               >
                 <X className="h-4 w-4" />
@@ -88,7 +88,7 @@ export default function Quizzes() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <span className="mr-1 inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-ink-400">
+          <span className="mr-1 inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-ink-400 dark:text-ink-300">
             <SlidersHorizontal className="h-3.5 w-3.5" /> Category
           </span>
           {categories.map((item) => (

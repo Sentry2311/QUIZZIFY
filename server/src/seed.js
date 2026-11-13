@@ -272,7 +272,7 @@ async function seed() {
     user: users.user._id,
     type: 'system',
     title: 'Welcome to Quizzify',
-    message: 'Explore public quizzes or join a live room with a code.',
+    message: 'Explore public quizzes and climb the leaderboard.',
   });
 
   console.log(`[seed] created ${createdQuizzes.length} quizzes and ${DEMO_USERS.length} users`);

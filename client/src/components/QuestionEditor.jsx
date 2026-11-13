@@ -50,7 +50,7 @@ export default function QuestionEditor({ questions, onChange, errors = {} }) {
               <button
                 type="button"
                 onClick={() => onChange([...questions, { ...newQuestion(), ...questions[questionIndex] }])}
-                className="rounded-md p-1.5 text-ink-400 transition hover:bg-ink-100 hover:text-ink-700 dark:hover:bg-white/10"
+                className="rounded-md p-1.5 text-ink-400 dark:text-ink-300 transition hover:bg-ink-100 hover:text-ink-700 dark:hover:bg-white/10"
                 aria-label="Duplicate question"
               >
                 <Copy className="h-4 w-4" />
@@ -80,7 +80,7 @@ export default function QuestionEditor({ questions, onChange, errors = {} }) {
           ) : null}
 
           <div className="mt-3 space-y-2">
-            <p className="text-xs font-medium text-ink-500 dark:text-ink-400">
+            <p className="text-xs font-medium text-ink-500 dark:text-ink-300">
               Options — tap the circle to mark the correct answer
             </p>
             {question.options.map((option, optionIndex) => {
@@ -112,7 +112,7 @@ export default function QuestionEditor({ questions, onChange, errors = {} }) {
                     type="button"
                     onClick={() => removeOption(questionIndex, optionIndex)}
                     disabled={question.options.length <= 2}
-                    className="rounded-md p-1.5 text-ink-400 transition hover:bg-ink-100 hover:text-rose-500 disabled:opacity-30 dark:hover:bg-white/10"
+                    className="rounded-md p-1.5 text-ink-400 dark:text-ink-300 transition hover:bg-ink-100 hover:text-rose-500 disabled:opacity-30 dark:hover:bg-white/10"
                     aria-label={`Remove option ${optionIndex + 1}`}
                   >
                     <X className="h-4 w-4" />
@@ -135,7 +135,7 @@ export default function QuestionEditor({ questions, onChange, errors = {} }) {
           </div>
 
           <div className="mt-3 grid gap-3 sm:grid-cols-3">
-            <label className="text-xs font-medium text-ink-500 dark:text-ink-400">
+            <label className="text-xs font-medium text-ink-500 dark:text-ink-300">
               Explanation (optional)
               <input
                 value={question.explanation || ''}
@@ -144,7 +144,7 @@ export default function QuestionEditor({ questions, onChange, errors = {} }) {
                 className="input mt-1 py-2"
               />
             </label>
-            <label className="text-xs font-medium text-ink-500 dark:text-ink-400">
+            <label className="text-xs font-medium text-ink-500 dark:text-ink-300">
               Points
               <input
                 type="number"
@@ -155,7 +155,7 @@ export default function QuestionEditor({ questions, onChange, errors = {} }) {
                 className="input mt-1 py-2"
               />
             </label>
-            <label className="text-xs font-medium text-ink-500 dark:text-ink-400">
+            <label className="text-xs font-medium text-ink-500 dark:text-ink-300">
               Seconds
               <input
                 type="number"
@@ -173,7 +173,7 @@ export default function QuestionEditor({ questions, onChange, errors = {} }) {
       <button
         type="button"
         onClick={() => onChange([...questions, newQuestion()])}
-        className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-ink-300 py-3 text-sm font-medium text-ink-500 transition hover:border-brand-400 hover:text-brand-600 dark:border-white/15 dark:text-ink-400 dark:hover:border-brand-500/60 dark:hover:text-brand-300"
+        className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-ink-300 py-3 text-sm font-medium text-ink-500 transition hover:border-brand-400 hover:text-brand-600 dark:border-white/15 dark:text-ink-300 dark:hover:border-brand-500/60 dark:hover:text-brand-300"
       >
         <Plus className="h-4 w-4" /> Add question
       </button>

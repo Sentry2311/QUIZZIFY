@@ -23,7 +23,7 @@ const Textarea = forwardRef(function Textarea({ label, error, hint, className, i
       {error ? (
         <p className="mt-1.5 text-xs font-medium text-rose-600 dark:text-rose-400">{error}</p>
       ) : hint ? (
-        <p className="mt-1.5 text-xs text-ink-400">{hint}</p>
+        <p className="mt-1.5 text-xs text-ink-400 dark:text-ink-300">{hint}</p>
       ) : null}
     </div>
   );

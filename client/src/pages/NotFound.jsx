@@ -9,7 +9,7 @@ export default function NotFound() {
       </span>
       <p className="mt-6 font-display text-5xl font-extrabold">404</p>
       <h1 className="mt-2 font-display text-2xl font-bold">This page took a wrong turn</h1>
-      <p className="mt-2 max-w-sm text-sm text-ink-500 dark:text-ink-400">
+      <p className="mt-2 max-w-sm text-sm text-ink-500 dark:text-ink-300">
         The page you were looking for does not exist. Maybe a quiz is waiting for you instead.
       </p>
       <div className="mt-6 flex gap-2">

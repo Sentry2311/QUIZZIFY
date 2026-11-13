@@ -8,8 +8,6 @@ import Quizzes from './pages/Quizzes.jsx';
 import QuizPlay from './pages/QuizPlay.jsx';
 import Leaderboard from './pages/Leaderboard.jsx';
 import Dashboard from './pages/Dashboard.jsx';
-import LiveJoin from './pages/LiveJoin.jsx';
-import LiveRoom from './pages/LiveRoom.jsx';
 import Admin from './pages/Admin.jsx';
 import AdminQuizzes from './pages/AdminQuizzes.jsx';
 import NotFound from './pages/NotFound.jsx';
@@ -24,16 +22,6 @@ export default function App() {
         <Route path="quizzes" element={<Quizzes />} />
         <Route path="quizzes/:id" element={<QuizPlay />} />
         <Route path="leaderboard" element={<Leaderboard />} />
-        <Route path="live" element={<LiveJoin />} />
-        <Route path="live/:code" element={<LiveRoom />} />
-        <Route
-          path="host/:quizId"
-          element={
-            <ProtectedRoute adminOnly>
-              <LiveRoom />
-            </ProtectedRoute>
-          }
-        />
         <Route
           path="dashboard"
           element={

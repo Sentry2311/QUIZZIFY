@@ -45,7 +45,7 @@ function ScoreRing({ percentage }) {
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span className="font-display text-3xl font-extrabold">{percentage}%</span>
-        <span className="text-xs text-ink-500 dark:text-ink-400">score</span>
+        <span className="text-xs text-ink-500 dark:text-ink-300">score</span>
       </div>
     </div>
   );
@@ -184,15 +184,15 @@ export default function QuizPlay() {
   if (phase === 'intro') {
     return (
       <div className="container-page py-10">
-        <Link to="/quizzes" className="inline-flex items-center gap-1.5 text-sm text-ink-500 transition hover:text-brand-600 dark:text-ink-400">
+        <Link to="/quizzes" className="inline-flex items-center gap-1.5 text-sm text-ink-500 transition hover:text-brand-600 dark:text-ink-300">
           <ArrowLeft className="h-4 w-4" /> All quizzes
         </Link>
 
         <div className="card mx-auto mt-6 max-w-3xl overflow-hidden">
-          <div className="relative bg-gradient-to-br from-brand-600 to-violet-700 px-6 py-10 text-white sm:px-10">
+          <div className="relative bg-gradient-to-br from-brand-800 via-brand-900 to-brand-950 px-6 py-10 text-brand-50 sm:px-10">
             <span className="text-5xl">{quiz.cover}</span>
             <h1 className="mt-4 font-display text-3xl font-extrabold !text-white sm:text-4xl">{quiz.title}</h1>
-            <p className="mt-2 max-w-xl text-brand-100">{quiz.description || 'Test your knowledge.'}</p>
+            <p className="mt-2 max-w-xl text-brand-200">{quiz.description || 'Test your knowledge.'}</p>
             <div className="mt-5 flex flex-wrap items-center gap-2 text-xs">
               <span className="rounded-full bg-white/15 px-3 py-1 font-medium">{quiz.category}</span>
               <span className="rounded-full bg-white/15 px-3 py-1 font-medium capitalize">{quiz.difficulty}</span>
@@ -221,7 +221,7 @@ export default function QuizPlay() {
               <p className="text-sm font-medium text-ink-700 dark:text-ink-200">
                 {quiz.plays} {quiz.plays === 1 ? 'player has' : 'players have'} attempted this quiz
               </p>
-              <p className="mt-1 text-xs text-ink-500 dark:text-ink-400">
+              <p className="mt-1 text-xs text-ink-500 dark:text-ink-300">
                 {isAuthenticated
                   ? 'Ready when you are. Good luck!'
                   : 'Sign in so we can save your score and show you the answers.'}
@@ -236,7 +236,7 @@ export default function QuizPlay() {
                     <Button to="/login" state={{ from: `/quizzes/${id}` }} className="w-full">
                       Sign in to play
                     </Button>
-                    <Link to="/register" className="mt-2 block text-center text-xs text-ink-500 hover:text-brand-600 dark:text-ink-400">
+                    <Link to="/register" className="mt-2 block text-center text-xs text-ink-500 hover:text-brand-600 dark:text-ink-300">
                       or create a free account
                     </Link>
                   </>
@@ -256,7 +256,7 @@ export default function QuizPlay() {
         <div className="flex items-center justify-between gap-4">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-brand-600 dark:text-brand-400">{quiz.title}</p>
-            <p className="mt-0.5 text-sm text-ink-500 dark:text-ink-400">
+            <p className="mt-0.5 text-sm text-ink-500 dark:text-ink-300">
               Question {index + 1} of {quiz.questions.length}
             </p>
           </div>
@@ -266,9 +266,9 @@ export default function QuizPlay() {
           </div>
         </div>
 
-        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-ink-200 dark:bg-white/10">
+                  <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-ink-200 dark:bg-white/10">
           <div
-            className={cn('h-full rounded-full transition-[width] duration-300', secondsLeft <= 5 ? 'bg-rose-500' : 'bg-brand-500')}
+            className={cn('h-full rounded-full transition-[width] duration-300', secondsLeft <= 5 ? 'bg-rose-500' : 'bg-accent-400')}
             style={{ width: `${Math.max(0, progress * 100)}%` }}
           />
         </div>
@@ -304,7 +304,7 @@ export default function QuizPlay() {
           </div>
 
           <div className="mt-6 flex items-center justify-between gap-3">
-            <p className="text-xs text-ink-400">
+            <p className="text-xs text-ink-500 dark:text-ink-300">
               {selected === null ? 'Pick an answer to continue' : 'You can change your answer until time runs out'}
             </p>
             <Button onClick={goNext} className="min-w-32">
@@ -321,7 +321,7 @@ export default function QuizPlay() {
     return (
       <div className="container-page flex min-h-[60vh] flex-col items-center justify-center gap-3">
         <Spinner className="h-8 w-8 text-brand-500" />
-        <p className="text-sm text-ink-500 dark:text-ink-400">Grading your answers…</p>
+        <p className="text-sm text-ink-500 dark:text-ink-300">Grading your answers…</p>
       </div>
     );
   }
@@ -337,7 +337,7 @@ export default function QuizPlay() {
               {result ? (result.attempt.percentage >= 80 ? 'Outstanding!' : result.attempt.percentage >= 50 ? 'Nice work!' : 'Keep practising') : 'Attempt saved?'}
             </h1>
             {result ? (
-              <p className="mt-1 text-sm text-ink-500 dark:text-ink-400">
+              <p className="mt-1 text-sm text-ink-500 dark:text-ink-300">
                 You answered {result.attempt.correctCount} of {result.attempt.totalQuestions} correctly in{' '}
                 {formatDuration(result.attempt.durationMs)}.
               </p>
@@ -356,7 +356,7 @@ export default function QuizPlay() {
 
         <div className="p-6 sm:p-8">
           <h2 className="font-display text-lg font-semibold">Answer review</h2>
-          <p className="mt-1 text-sm text-ink-500 dark:text-ink-400">
+          <p className="mt-1 text-sm text-ink-500 dark:text-ink-300">
             {result ? 'Correct answers are highlighted with their explanations.' : 'Grading was unavailable, so no review is shown.'}
           </p>
 

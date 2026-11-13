@@ -210,7 +210,7 @@ export default function QuizEditorModal({ open, onClose, quiz, onSaved }) {
               type="checkbox"
               checked={form.isPublished}
               onChange={(event) => set({ isPublished: event.target.checked })}
-              className="h-4 w-4 rounded border-ink-300 text-brand-600 focus:ring-brand-500"
+              className="h-4 w-4 rounded border-ink-300 accent-brand-800 focus:ring-accent-500"
             />
             Publish immediately
           </label>
@@ -219,7 +219,7 @@ export default function QuizEditorModal({ open, onClose, quiz, onSaved }) {
         <div className="border-t border-ink-100 pt-4 dark:border-white/10">
           <div className="mb-3 flex items-center justify-between">
             <h3 className="font-display text-base font-semibold">Questions</h3>
-            <span className="text-xs text-ink-400">{form.questions.length} total</span>
+            <span className="text-xs text-ink-400 dark:text-ink-300">{form.questions.length} total</span>
           </div>
           <QuestionEditor
             questions={form.questions}

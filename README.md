@@ -1,8 +1,8 @@
 # Quizzify — full-stack online quiz platform
 
 Quizzify is a MERN application for creating, playing and hosting quizzes in real time. Players browse a
-catalogue of quizzes, get server-graded scores with answer reviews, climb leaderboards and join live rooms
-with a 5-character code where questions, scores and chat update over WebSockets.
+catalogue of quizzes, get server-graded scores with answer reviews, climb leaderboards and receive instant
+in-app notifications over WebSockets.
 
 Built to satisfy the Full-Stack Project Checklist: responsive React + Tailwind UI, Context API state
 management, secure Express REST API, MongoDB/Mongoose models, JWT auth with role-based access control,
@@ -20,13 +20,27 @@ Socket.IO real-time features, Docker, GitHub Actions CI and documentation.
 6. [Demo accounts](#demo-accounts)
 7. [Scripts](#scripts)
 8. [API documentation](#api-documentation)
-9. [Real-time events](#real-time-events)
+9. [Real-time notifications](#real-time-notifications)
 10. [Testing](#testing)
 11. [Docker](#docker)
 12. [Deployment](#deployment)
 13. [Database schema](#database-schema)
 14. [Security notes](#security-notes)
 15. [Project status & limitations](#project-status--limitations)
+
+---
+
+## Screenshots
+
+| Landing (light) | Landing (dark) |
+| --- | --- |
+| ![Landing light](screenshots/landing-final-light.png) | ![Landing dark](screenshots/landing-final-dark.png) |
+
+| Dashboard | Quiz library |
+| --- | --- |
+| ![Dashboard](screenshots/dashboard-light.png) | ![Admin quiz modal](screenshots/admin-quiz-modal-light.png) |
+
+More captures (quiz player, leaderboard, admin overview, mobile) live in [`screenshots/`](screenshots).
 
 ---
 
@@ -38,13 +52,11 @@ Socket.IO real-time features, Docker, GitHub Actions CI and documentation.
 - Timed quiz player: per-question countdown, progress bar, auto-advance, full answer review with explanations.
 - Personal dashboard: attempts, best score, average score, recent history and recommended quizzes.
 - Global and per-quiz leaderboards.
-- Live quiz rooms: join with a code (account optional), see the scoreboard update instantly, chat with the room.
 - In-app notifications pushed over WebSockets when an attempt scores well.
 
 **Admins**
 
 - Create, edit, publish/unpublish and delete quizzes with a full question builder.
-- Host a quiz live and share the generated room code.
 - Platform analytics: users, quizzes, attempts, average score, top quizzes, recent activity.
 - User management with role changes (`user` ↔ `admin`), protected against self-demotion.
 
@@ -83,7 +95,7 @@ QUIZZIFY/
 │   │   ├── context/            # Auth, Theme, Toast, Socket, Notification providers
 │   │   ├── hooks/              # useApi, useAuth, useDebounce, useCountdown, useSocket…
 │   │   ├── lib/                # Axios client, endpoint helpers, formatting utilities
-│   │   ├── pages/              # Landing, Quizzes, QuizPlay, Dashboard, LiveRoom, Admin…
+│   │   ├── pages/              # Landing, Quizzes, QuizPlay, Dashboard, Admin…
 │   │   ├── App.jsx             # Route table with protected/admin routes
 │   │   └── main.jsx            # Provider composition
 │   ├── nginx.conf              # Production SPA + API/WebSocket proxy
@@ -96,7 +108,6 @@ QUIZZIFY/
 │   │   ├── models/             # User, Quiz (embedded questions), Attempt, Notification
 │   │   ├── routes/             # REST route definitions
 │   │   ├── services/           # notification fan-out
-│   │   ├── sockets/            # live room engine (presence, questions, scoring, chat)
 │   │   ├── validators/         # Zod request schemas
 │   │   ├── app.js              # Express app factory
 │   │   ├── index.js            # HTTP + Socket.IO bootstrap
@@ -110,8 +121,8 @@ QUIZZIFY/
 ```
 
 Request flow: React → Axios (`/api`) → Express router → Zod validation → JWT guard → controller →
-Mongoose → MongoDB. Socket.IO shares the same HTTP server; the handshake is authenticated with the same JWT,
-and live-room state is authoritative on the server.
+Mongoose → MongoDB. Socket.IO shares the same HTTP server; the handshake is authenticated with the same JWT
+and notifications are pushed to `user:<id>` rooms.
 
 ---
 
@@ -262,36 +273,22 @@ curl "http://localhost:5000/api/quizzes?search=react&difficulty=easy&page=1&limi
 
 ---
 
-## Real-time events
+## Real-time notifications
 
-Connection: `io('/', { auth: { token } })` — the JWT is optional; guests may join a room with a display name.
+Socket.IO shares the HTTP server with the REST API. The handshake is authenticated with the same JWT, each
+connection joins `user:<id>`, and the API pushes notifications after successful writes.
 
-Client → server
-
-| Event         | Payload                 | Ack                                             |
-| ------------- | ----------------------- | ----------------------------------------------- |
-| `room:create` | `{ quizId }`            | `{ ok, room }` — host must own the quiz or be admin |
-| `room:join`   | `{ code, name }`        | `{ ok, room, isHost }`                          |
-| `room:start`  | —                       | `{ ok }` — host only                            |
-| `room:next`   | —                       | `{ ok, ended? }` — host only                    |
-| `room:end`    | —                       | `{ ok }` — host only                            |
-| `room:answer` | `{ selectedIndex }`     | `{ ok, isCorrect, awarded, totalScore }`        |
-| `chat:message`| `{ text }`              | `{ ok }`                                        |
-| `room:leave`  | —                       | —                                               |
+Connection: `io('/', { auth: { token } })`
 
 Server → client
 
-| Event            | Payload                                                    |
-| ---------------- | ---------------------------------------------------------- |
-| `room:state`     | Room snapshot: players, status, index, chat history        |
-| `question`       | Current question (options only, never the answer), deadline |
-| `question:end`   | `correctIndex`, explanation, answer distribution, `isLast`  |
-| `scoreboard`     | Live player ranking                                         |
-| `chat:message`   | Chat message (system messages flagged)                      |
-| `room:ended`     | Final scoreboard + reason                                   |
-| `notification`   | Persisted notification pushed to `user:<id>`                |
+| Event          | Payload                                                              |
+| -------------- | -------------------------------------------------------------------- |
+| `notification` | Persisted notification (`title`, `message`, `link`, `read`) pushed to `user:<id>` |
 
-Live attempts from signed-in players are stored in MongoDB when the session ends.
+Notifications are stored in MongoDB (so they survive reloads) and emitted immediately when created, for
+example after submitting an attempt that scores 80% or more. `GET /notifications` returns the latest ones
+with an unread count.
 
 ---
 
@@ -328,11 +325,11 @@ cd client && npm run build
 docker compose up --build
 ```
 
-- Client (nginx): <http://localhost:8080>
-- API: <http://localhost:5000/api/health>
-- MongoDB: `localhost:27017` with a named volume
+- Client (nginx): <http://localhost:8080> — the SPA and `/api` are served from this one origin, so no CORS setup is needed
+- API (published for debugging): <http://localhost:5050/api/health>
+- MongoDB: private to the compose network on a named volume (`mongo-data`); no host port is published, so it cannot collide with a local MongoDB
 
-Set a real secret first: `JWT_SECRET=... docker compose up --build`. After the stack is up, seed it:
+Set a real secret first: `JWT_SECRET=... docker compose up --build` (a `.env` file in the repo root is picked up automatically). After the stack is up, seed it:
 
 ```bash
 docker compose exec server node src/seed.js
@@ -344,15 +341,34 @@ Images are multi-stage, run the API as a non-root user and include health checks
 
 ## Deployment
 
-The stack is deploy-ready but nothing is published from this repository by default.
+Step-by-step instructions with exact commands: **[docs/DEPLOY.md](docs/DEPLOY.md)**.
 
-**Render (blueprint)** — `render.yaml` defines `quizzify-api` (Node web service) and `quizzify-client`
-(static site). Create a MongoDB Atlas cluster, then set:
-`MONGODB_URI`, `CLIENT_URL` (the client URL), and `JWT_SECRET` (auto-generated). On the client, set
-`VITE_API_URL` to the API URL plus `/api`.
+The root `Dockerfile` builds **one production image**: nginx serves the compiled SPA and proxies `/api`
+and `/socket.io` to the Express API running beside it. Deploying that image (Railway, Fly.io, Render
+Docker, any VPS) gives a single origin, so the client keeps its default `/api` base URL — no
+`VITE_API_URL`, no CORS allow-list, no cross-origin WebSocket setup.
 
-**Vercel/Netlify (client only)** — build command `npm run build`, output `dist`, rewrite all routes to
-`/index.html`, and set `VITE_API_URL` to the hosted API.
+**Railway** — builds from this folder without a git remote and can host MongoDB in the same project:
+
+```bash
+railway login
+railway init --name quizzify
+railway add --service quizzify
+railway add --database mongo
+railway up
+railway domain --service quizzify
+railway variables --service quizzify --set 'MONGODB_URI=${{MongoDB.MONGO_URL}}' \
+  --set 'JWT_SECRET=<random>' --set 'CLIENT_URL=https://<generated-domain>'
+railway up
+railway run --service quizzify node server/src/seed.js
+```
+
+**MongoDB Atlas + any Docker host** — create an M0 cluster, then run the image with `MONGODB_URI`,
+`JWT_SECRET`, `CLIENT_URL` (the public URL) and `NODE_ENV=production`. `CLIENT_URL` must match the
+public origin because it gates the Socket.IO handshake.
+
+`render.yaml` still describes the older two-service split (static client + Node API); that variant needs
+`VITE_API_URL` on the client and `CLIENT_URL` on the API.
 
 **CI/CD** — `.github/workflows/ci.yml` runs the API tests, the client build and Docker image builds on every
 push/PR. `.github/workflows/deploy.yml` publishes versioned images to GHCR on tags and calls
@@ -406,16 +422,14 @@ notifications on `(user, read, createdAt)`.
 
 ## Project status & limitations
 
-Verified locally: 23/23 API tests pass, the client production build succeeds, MongoDB is seeded, the API
-serves the seeded catalogue over HTTP through the Vite proxy, and the live-room flow (create → join → chat →
-question → answer → reveal → end) was exercised end to end with a temporary Socket.IO smoke script.
+Verified locally: 23/23 API tests pass, the client production build succeeds, MongoDB is seeded, and the API
+serves the seeded catalogue over HTTP through the Vite proxy.
 
 Not included / worth knowing:
 
-- Live room state (players, chat, current question) is held in memory on a single API instance. A multi-instance
-  deployment would need a Redis adapter and persisted room state.
 - No password-reset email flow, avatar uploads, or quiz images beyond emoji covers.
-- No automated frontend or browser E2E suite; UI behaviour was verified through the build plus HTTP and
-  Socket.IO smoke checks, not by clicking through every screen.
+- Real-time features are limited to notifications; there are no multiplayer/live quiz rooms in this build.
+- No automated frontend or browser E2E suite; UI behaviour was verified through the build plus HTTP checks,
+  not by clicking through every screen.
 - Screenshots and a `.pptx` deck are not generated; `docs/PRESENTATION.md` holds a slide-by-slide outline.
 - Rate limits are per-process defaults and may need tuning in production.

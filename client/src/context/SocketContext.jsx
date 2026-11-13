@@ -10,7 +10,7 @@ export function SocketProvider({ children }) {
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
-    // One shared socket for live rooms, chat and notifications.
+    // One shared socket for real-time notifications.
     const instance = io({
       auth: { token: token || undefined },
       autoConnect: true,

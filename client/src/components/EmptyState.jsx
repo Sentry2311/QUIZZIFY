@@ -7,7 +7,7 @@ export default function EmptyState({ icon: Icon, title, description, action }) {
         </span>
       ) : null}
       <h3 className="font-display text-lg font-semibold">{title}</h3>
-      {description ? <p className="max-w-sm text-sm text-ink-500 dark:text-ink-400">{description}</p> : null}
+      {description ? <p className="max-w-sm text-sm text-ink-500 dark:text-ink-300">{description}</p> : null}
       {action}
     </div>
   );
